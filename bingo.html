@@ -1,0 +1,219 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- See this live on http://jsfiddle.net/FloydPink/KHLtw/ -->
+<head>
+    <title>Bingo/Housie Number Generator</title>
+    <style type="text/css">
+        div {
+            text-align: center;
+        }
+
+        .bigNumberDisplay {
+            font-size: 6em;
+        }
+
+        .numbersTable {
+            font-size: 1.6em;
+        }
+
+        table {
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        table, tr, td {
+            border-collapse: collapse;
+            border: solid 1px #999;
+        }
+
+        td {
+            min-width: 100px;
+            color: #fff;
+        }
+
+        td.selected {
+            color: #f00;
+        }
+
+    </style>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            var bingo = {
+                selectedNumbers:[],
+                generateRandom:function () {
+                    var min = 1;
+                    var max = 89;
+                    var random = Math.floor(Math.random() * (max - min + 1)) + min;
+                    return random;
+                },
+                generateNextRandom:function () {
+                    if (bingo.selectedNumbers.length > 88) {
+                        alert("All numbers Exhausted");
+                        return 0;
+                    }
+                    var random = bingo.generateRandom();
+                    while ($.inArray(random, bingo.selectedNumbers) > -1) {
+                        random = bingo.generateRandom();
+                    }
+                    bingo.selectedNumbers.push(random);
+                    return random;
+                }
+            };
+            $('td').each(function () {
+                var concatClass = this.cellIndex + "" + this.parentNode.rowIndex;
+                var numberString = parseInt(concatClass, 10).toString();
+                $(this).addClass("cell" + numberString).text(numberString);
+            });
+            $('#btnGenerate').click(function () {
+                var random = bingo.generateNextRandom().toString();
+                $('.bigNumberDisplay span').text(random);
+                $('td.cell' + random).addClass('selected');
+            });
+            window.onbeforeunload = function (e) {
+                e = e || window.event;
+                var returnString = 'Are you sure?';
+                if (e) {
+                    e.returnValue = returnString;
+                }
+                return returnString;
+            };
+        });
+    </script>
+</head>
+<body>
+<div class="container">
+    <div class="bigNumberDisplay">
+        <span>0</span>
+    </div>
+    <div>
+        <input id="btnGenerate" type="button" value="Generate"/>
+    </div>
+
+    <br/>
+
+    <div class="numbersTable">
+        <table>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+        </table>
+    </div>
+
+    <br/>
+
+    <div>
+        <span>Check the <a href="http://chandoo.org/wp/2008/07/16/bingo-housie-ticket-generator-excel/"
+                           title="chandoo.org">Bingo/Housie Ticket Generator excel</a> to get the Housie tickets!</span>
+    </div>
+</div>
+</body>
+</html>
