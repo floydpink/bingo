@@ -44,7 +44,7 @@
                 selectedNumbers:[],
                 generateRandom:function () {
                     var min = 1;
-                    var max = 89;
+                    var max = 75;
                     var random = Math.floor(Math.random() * (max - min + 1)) + min;
                     return random;
                 },
@@ -63,12 +63,26 @@
             };
             $('td').each(function () {
                 var concatClass = this.cellIndex + "" + this.parentNode.rowIndex;
-                var numberString = parseInt(concatClass, 10).toString();
-                $(this).addClass("cell" + numberString).text(numberString);
+                var number = parseInt(concatClass, 10);
+                var prefix = '';
+                if (number >= 1 && number <= 15) prefix = 'B';
+                else if (number >= 16 && number <= 30) prefix = 'I';
+                else if (number >= 31 && number <= 45) prefix = 'N';
+                else if (number >= 46 && number <= 60) prefix = 'G';
+                else if (number >= 61 && number <= 75) prefix = 'O';
+                var displayText = prefix + number;
+                $(this).addClass("cell" + number).text(displayText);
             });
             $('#btnGenerate').click(function () {
-                var random = bingo.generateNextRandom().toString();
-                $('.bigNumberDisplay span').text(random);
+                var random = bingo.generateNextRandom();
+                var prefix = '';
+                if (random >= 1 && random <= 15) prefix = 'B';
+                else if (random >= 16 && random <= 30) prefix = 'I';
+                else if (random >= 31 && random <= 45) prefix = 'N';
+                else if (random >= 46 && random <= 60) prefix = 'G';
+                else if (random >= 61 && random <= 75) prefix = 'O';
+                var displayText = prefix + random;
+                $('.bigNumberDisplay span').text(displayText);
                 $('td.cell' + random).addClass('selected');
             });
             window.onbeforeunload = function (e) {
